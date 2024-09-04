@@ -8,6 +8,7 @@ public class InvestmentPostRequestBody {
     private String name;
     private int quantity;
     private double purchasePrice;
+    private Long userId;
 
 
 }

@@ -25,9 +25,9 @@ public class InvestmentController {
             return new ResponseEntity<>(investmentService.listAll(), HttpStatus.OK);
         }
 
-        @GetMapping(path = "/{id}")
-        public ResponseEntity<Investment> findById(@PathVariable long id){
-            return new ResponseEntity<>(investmentService.findByIdThrowBadRequestException(id), HttpStatus.OK);
+        @GetMapping(path = "/{investmentId}")
+        public ResponseEntity<Investment> findById(@PathVariable long investmentId) {
+            return new ResponseEntity<>(investmentService.findByIdThrowBadRequestException(investmentId), HttpStatus.OK);
         }
 
         @PostMapping
@@ -35,12 +35,11 @@ public class InvestmentController {
             return new ResponseEntity<>(investmentService.save(investmentPostRequestBody), HttpStatus.CREATED);
         }
 
-        @DeleteMapping(path = "/{id}")
-        public ResponseEntity<Void> delete(@PathVariable long id){
-            investmentService.delete(id);
+        @DeleteMapping(path = "/{investmentId}")
+        public ResponseEntity<Void> delete(@PathVariable long investmentId) {
+            investmentService.deleteInvestment(investmentId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
         @PutMapping
         public ResponseEntity<Void> replace(@RequestBody InvestmentPutRequestBody investmentPutRequestBody){
             investmentService.replace(investmentPutRequestBody);

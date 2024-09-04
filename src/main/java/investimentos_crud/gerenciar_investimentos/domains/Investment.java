@@ -5,15 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "investments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "investments")
 public class Investment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long investmentId;
     @Column(name = "investment_type", nullable = false)
     private String investmentType;
     @Column(nullable = false)
@@ -22,4 +22,7 @@ public class Investment {
     private int quantity;
     @Column(nullable = false)
     private double purchasePrice;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

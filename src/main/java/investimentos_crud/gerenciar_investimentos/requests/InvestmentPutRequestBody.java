@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class InvestmentPutRequestBody {
-    private long id;
+    private long investmentId;
     private String investmentType;
     private String name;
     private int quantity;

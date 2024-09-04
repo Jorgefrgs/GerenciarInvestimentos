@@ -25,23 +25,25 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findByIdThrowBadRequestException(long id){
-        return userRepository.findById(id)
+    public User findByIdThrowBadRequestException(long userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"));
     }
+
 
     public User save(UserPostRequestBody userPostRequestBody){
         return userRepository.save(userMapper.toUser(userPostRequestBody));
     }
 
-    public void delete(long id){
-        userRepository.delete(findByIdThrowBadRequestException(id));
+    public void deleteUser(long userId){
+        userRepository.delete(findByIdThrowBadRequestException(userId));
     }
 
-    public void replace(UserPutRequestBody userPutRequestBody){
-        User savedUser = findByIdThrowBadRequestException(userPutRequestBody.getId());
+    public void replace(UserPutRequestBody userPutRequestBody) {
+        User savedUser = findByIdThrowBadRequestException(userPutRequestBody.getUserId());
         User user = userMapper.toUser(userPutRequestBody);
-        user.setId(savedUser.getId());
+        user.setUserId(savedUser.getUserId());
         userRepository.save(user);
     }
+
 }

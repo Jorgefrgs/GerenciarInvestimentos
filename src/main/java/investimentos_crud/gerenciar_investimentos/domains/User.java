@@ -5,17 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "users")
 @Data
 @AllArgsConstructor
-@Entity
 @NoArgsConstructor
-@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private long userId;
     @Column(nullable = false, unique = true)
     private String name;
     @Column(nullable = false)
     private String email;
 }
+
