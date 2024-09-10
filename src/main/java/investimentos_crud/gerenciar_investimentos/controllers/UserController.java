@@ -8,6 +8,8 @@ import investimentos_crud.gerenciar_investimentos.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,8 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<List<User>> list(){
-        return new ResponseEntity<>(userService.listAll(), HttpStatus.OK);
+    public ResponseEntity<Page<User>> list(Pageable pageable){
+        return new ResponseEntity<>(userService.listAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{userId}")

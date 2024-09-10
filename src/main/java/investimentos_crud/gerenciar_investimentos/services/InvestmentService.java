@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class InvestmentService {
     private UserService userService;
 
 
-    public List<Investment> listAll(){
-        return investmentRepository.findAll();
+    public Page<Investment> listAll(Pageable pageable){
+        return investmentRepository.findAll(pageable);
     }
 
     public List<Investment> findByName(String name){

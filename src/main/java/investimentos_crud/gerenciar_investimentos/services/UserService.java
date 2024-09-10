@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,8 +30,8 @@ public class UserService {
     private final UserMapper userMapper;
 
 
-    public List<User> listAll(){
-        return userRepository.findAll();
+    public Page<User> listAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public User findByIdThrowBadRequestException(long userId) {
