@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface InvestmentRepository extends JpaRepository<Investment, Long> {
     List<Investment> findByUser(User user);
+    List<Investment> findByName(String name);
 }

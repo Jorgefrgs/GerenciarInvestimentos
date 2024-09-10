@@ -20,6 +20,6 @@ public class InvestmentUserService {
         User user = userService.findByIdThrowBadRequestException(userId);
         List<Investment> investments = investmentRepository.findByUser(user);
         investments.forEach(investment -> investmentService.deleteInvestment(investment.getInvestmentId()));
-        userService.deleteUser(userId);
+        userService.deleteUser((userId));
     }
 }

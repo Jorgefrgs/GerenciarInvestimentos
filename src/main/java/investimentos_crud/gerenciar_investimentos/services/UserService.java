@@ -2,11 +2,13 @@ package investimentos_crud.gerenciar_investimentos.services;
 
 import investimentos_crud.gerenciar_investimentos.domains.Investment;
 import investimentos_crud.gerenciar_investimentos.domains.User;
+import investimentos_crud.gerenciar_investimentos.exception.BadRequestException;
 import investimentos_crud.gerenciar_investimentos.mappers.UserMapper;
 import investimentos_crud.gerenciar_investimentos.repositories.InvestmentRepository;
 import investimentos_crud.gerenciar_investimentos.repositories.UserRepository;
 import investimentos_crud.gerenciar_investimentos.requests.UserPostRequestBody;
 import investimentos_crud.gerenciar_investimentos.requests.UserPutRequestBody;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final InvestmentRepository investmentRepository;
 
-    @Autowired
-    @Lazy
-    private final InvestmentService investmentService;
 
     public List<User> listAll(){
         return userRepository.findAll();
@@ -36,15 +34,13 @@ public class UserService {
 
     public User findByIdThrowBadRequestException(long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"));
+                .orElseThrow(() -> new BadRequestException( "User not found"));
     }
 
-
+    @Transactional
     public User save(UserPostRequestBody userPostRequestBody){
         return userRepository.save(userMapper.toUser(userPostRequestBody));
     }
-
-
 
     public void deleteUser(long userId){
         userRepository.delete(findByIdThrowBadRequestException(userId));

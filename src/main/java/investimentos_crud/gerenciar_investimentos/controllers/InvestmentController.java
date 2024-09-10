@@ -1,9 +1,11 @@
 package investimentos_crud.gerenciar_investimentos.controllers;
 
 import investimentos_crud.gerenciar_investimentos.domains.Investment;
+import investimentos_crud.gerenciar_investimentos.repositories.InvestmentRepository;
 import investimentos_crud.gerenciar_investimentos.requests.InvestmentPostRequestBody;
 import investimentos_crud.gerenciar_investimentos.requests.InvestmentPutRequestBody;
 import investimentos_crud.gerenciar_investimentos.services.InvestmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,6 @@ public class InvestmentController {
 
         private final InvestmentService investmentService;
 
-
         @GetMapping
         public ResponseEntity<List<Investment>> list(){
             return new ResponseEntity<>(investmentService.listAll(), HttpStatus.OK);
@@ -30,8 +31,14 @@ public class InvestmentController {
             return new ResponseEntity<>(investmentService.findByIdThrowBadRequestException(investmentId), HttpStatus.OK);
         }
 
+        @GetMapping(path = "/find")
+        public ResponseEntity<List<Investment>> findByName(@RequestParam String name) {
+            return new ResponseEntity<>(investmentService.findByName(name), HttpStatus.OK);
+
+        }
+
         @PostMapping
-        public ResponseEntity<Investment> save (@RequestBody InvestmentPostRequestBody investmentPostRequestBody){
+        public ResponseEntity<Investment> save (@RequestBody @Valid InvestmentPostRequestBody investmentPostRequestBody){
             return new ResponseEntity<>(investmentService.save(investmentPostRequestBody), HttpStatus.CREATED);
         }
 

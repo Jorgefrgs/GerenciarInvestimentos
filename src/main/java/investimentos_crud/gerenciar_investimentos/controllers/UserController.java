@@ -5,6 +5,7 @@ import investimentos_crud.gerenciar_investimentos.requests.UserPostRequestBody;
 import investimentos_crud.gerenciar_investimentos.requests.UserPutRequestBody;
 import investimentos_crud.gerenciar_investimentos.services.InvestmentUserService;
 import investimentos_crud.gerenciar_investimentos.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save (@RequestBody UserPostRequestBody userPostRequestBody){
+    public ResponseEntity<User> save (@RequestBody @Valid UserPostRequestBody userPostRequestBody){
         return new ResponseEntity<>(userService.save(userPostRequestBody), HttpStatus.CREATED);
     }
 
@@ -51,17 +52,14 @@ public class UserController {
     }
     @DeleteMapping(path = "/{userId}/with-investments")
     public ResponseEntity<Void> deleteUserWithInvestments(@PathVariable long userId) {
-        try {
-            investmentUserService.deleteUserWithInvestments(userId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            log.error("Error deleting user with investments", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        investmentUserService.deleteUserWithInvestments(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
 
 
 
 
 }
-}
+
